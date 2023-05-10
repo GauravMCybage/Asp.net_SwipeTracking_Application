@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CybEmpTrackerSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="EmployeeDetails">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="10" />
+    <Property Name="Department" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="SwipeInOutDetails">
+    <Key>
+      <PropertyRef Name="SwipeID" />
+    </Key>
+    <Property Name="SwipeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SwipeDate" Type="date" />
+    <Property Name="SwipeIn" Type="time" Precision="7" />
+    <Property Name="SwipeOut" Type="time" Precision="7" />
+    <Property Name="EmployeeID" Type="int" />
+  </EntityType>
+  <EntityType Name="TotalHoursInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" />
+    <Property Name="SwipeDate" Type="date" />
+    <Property Name="TotalHours" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK__SwipeInOu__Emplo__3A81B327">
+    <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+    <End Role="SwipeInOutDetails" Type="Self.SwipeInOutDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeDetails">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="SwipeInOutDetails">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="AddorEditEmployeeDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmployeeID" Type="int" Mode="In" />
+    <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+    <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Age" Type="int" Mode="In" />
+    <Parameter Name="Gender" Type="nvarchar" Mode="In" />
+    <Parameter Name="Department" Type="nvarchar" Mode="In" />
+    <Parameter Name="IsActive" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="calculate_total_hours" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="employee_id" Type="int" Mode="In" />
+    <Parameter Name="date" Type="date" Mode="In" />
+  </Function>
+  <Function Name="InsertOrUpdateSwipeOut" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SwipeDate" Type="date" Mode="In" />
+    <Parameter Name="SwipeOut" Type="time" Mode="In" />
+    <Parameter Name="EmployeeID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="InsertSwipeIn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SwipeDate" Type="date" Mode="In" />
+    <Parameter Name="SwipeIn" Type="time" Mode="In" />
+    <Parameter Name="EmployeeID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UpdateSwipeIn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SwipeDate" Type="date" Mode="In" />
+    <Parameter Name="SwipeIn" Type="time" Mode="In" />
+    <Parameter Name="EmployeeID" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="CybEmpTrackerSystemModelStoreContainer">
+    <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SwipeInOutDetails" EntityType="Self.SwipeInOutDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TotalHoursInfo" EntityType="Self.TotalHoursInfo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__SwipeInOu__Emplo__3A81B327" Association="Self.FK__SwipeInOu__Emplo__3A81B327">
+      <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+      <End Role="SwipeInOutDetails" EntitySet="SwipeInOutDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

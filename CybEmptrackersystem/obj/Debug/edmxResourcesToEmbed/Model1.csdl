@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CybEmpTrackerSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="EmployeeDetail">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="SwipeInOutDetails" Relationship="Self.FK__SwipeInOu__Emplo__3A81B327" FromRole="EmployeeDetails" ToRole="SwipeInOutDetails" />
+  </EntityType>
+  <EntityType Name="SwipeInOutDetail">
+    <Key>
+      <PropertyRef Name="SwipeID" />
+    </Key>
+    <Property Name="SwipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SwipeDate" Type="DateTime" Precision="0" />
+    <Property Name="SwipeIn" Type="Time" Precision="7" />
+    <Property Name="SwipeOut" Type="Time" Precision="7" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <NavigationProperty Name="EmployeeDetail" Relationship="Self.FK__SwipeInOu__Emplo__3A81B327" FromRole="SwipeInOutDetails" ToRole="EmployeeDetails" />
+  </EntityType>
+  <EntityType Name="TotalHoursInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <Property Name="SwipeDate" Type="DateTime" Precision="0" />
+    <Property Name="TotalHours" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK__SwipeInOu__Emplo__3A81B327">
+    <End Role="EmployeeDetails" Type="Self.EmployeeDetail" Multiplicity="0..1" />
+    <End Role="SwipeInOutDetails" Type="Self.SwipeInOutDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeDetails">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="SwipeInOutDetails">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CybEmpTrackerSystemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetail" />
+    <EntitySet Name="SwipeInOutDetails" EntityType="Self.SwipeInOutDetail" />
+    <EntitySet Name="TotalHoursInfoes" EntityType="Self.TotalHoursInfo" />
+    <AssociationSet Name="FK__SwipeInOu__Emplo__3A81B327" Association="Self.FK__SwipeInOu__Emplo__3A81B327">
+      <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+      <End Role="SwipeInOutDetails" EntitySet="SwipeInOutDetails" />
+    </AssociationSet>
+    <FunctionImport Name="AddorEditEmployeeDetails">
+      <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
+      <Parameter Name="FirstName" Mode="In" Type="String" />
+      <Parameter Name="LastName" Mode="In" Type="String" />
+      <Parameter Name="Age" Mode="In" Type="Int32" />
+      <Parameter Name="Gender" Mode="In" Type="String" />
+      <Parameter Name="Department" Mode="In" Type="String" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="calculate_total_hours">
+      <Parameter Name="employee_id" Mode="In" Type="Int32" />
+      <Parameter Name="date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="InsertOrUpdateSwipeOut">
+      <Parameter Name="SwipeDate" Mode="In" Type="DateTime" />
+      <Parameter Name="SwipeOut" Mode="In" Type="Time" />
+      <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertSwipeIn">
+      <Parameter Name="SwipeDate" Mode="In" Type="DateTime" />
+      <Parameter Name="SwipeIn" Mode="In" Type="Time" />
+      <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateSwipeIn">
+      <Parameter Name="SwipeDate" Mode="In" Type="DateTime" />
+      <Parameter Name="SwipeIn" Mode="In" Type="Time" />
+      <Parameter Name="EmployeeID" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,2 @@
+E:\Asp.net_SwipeTracking_Application\CybEmptrackersystem.Tests\obj\Debug\CybEmptrackersystem.Tests.csproj.AssemblyReference.cache
+E:\Asp.net_SwipeTracking_Application\CybEmptrackersystem.Tests\obj\Debug\CybEmptrackersystem.Tests.csproj.CoreCompileInputs.cache

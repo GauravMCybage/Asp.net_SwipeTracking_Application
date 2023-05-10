@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CybEmpSystemModelStoreContainer" CdmEntityContainer="CybEmpSystemEntities1">
+    <EntitySetMapping Name="EmployeeDetails">
+      <EntityTypeMapping TypeName="CybEmpSystemModel.EmployeeDetail">
+        <MappingFragment StoreEntitySet="EmployeeDetails">
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SwipeInOutDetails">
+      <EntityTypeMapping TypeName="CybEmpSystemModel.SwipeInOutDetail">
+        <MappingFragment StoreEntitySet="SwipeInOutDetails">
+          <ScalarProperty Name="SwipeID" ColumnName="SwipeID" />
+          <ScalarProperty Name="SwipeDate" ColumnName="SwipeDate" />
+          <ScalarProperty Name="SwipeIn" ColumnName="SwipeIn" />
+          <ScalarProperty Name="SwipeOut" ColumnName="SwipeOut" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TotalHoursInfoes">
+      <EntityTypeMapping TypeName="CybEmpSystemModel.TotalHoursInfo">
+        <MappingFragment StoreEntitySet="TotalHoursInfo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="SwipeDate" ColumnName="SwipeDate" />
+          <ScalarProperty Name="TotalHours" ColumnName="TotalHours" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AddOrUpdateSwipeInData" FunctionName="CybEmpSystemModel.Store.AddOrUpdateSwipeInData" />
+    <FunctionImportMapping FunctionImportName="AddOrUpdateSwipeOutData" FunctionName="CybEmpSystemModel.Store.AddOrUpdateSwipeOutData" />
+    <FunctionImportMapping FunctionImportName="SwipeOutCheck" FunctionName="CybEmpSystemModel.Store.SwipeOutCheck" />
+    <FunctionImportMapping FunctionImportName="UpdateTotalHours" FunctionName="CybEmpSystemModel.Store.UpdateTotalHours" />
+  </EntityContainerMapping>
+</Mapping>

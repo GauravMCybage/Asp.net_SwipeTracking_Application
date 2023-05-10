@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CybEmpSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="EmployeeDetail">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="SwipeInOutDetails" Relationship="Self.FK__SwipeInOu__Emplo__286302EC" FromRole="EmployeeDetails" ToRole="SwipeInOutDetails" />
+  </EntityType>
+  <EntityType Name="SwipeInOutDetail">
+    <Key>
+      <PropertyRef Name="SwipeID" />
+    </Key>
+    <Property Name="SwipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SwipeDate" Type="DateTime" />
+    <Property Name="SwipeIn" Type="Time" />
+    <Property Name="SwipeOut" Type="Time" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <NavigationProperty Name="EmployeeDetail" Relationship="Self.FK__SwipeInOu__Emplo__286302EC" FromRole="SwipeInOutDetails" ToRole="EmployeeDetails" />
+  </EntityType>
+  <EntityType Name="TotalHoursInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeID" Type="Int32" />
+    <Property Name="SwipeDate" Type="DateTime" />
+    <Property Name="TotalHours" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK__SwipeInOu__Emplo__286302EC">
+    <End Role="EmployeeDetails" Type="Self.EmployeeDetail" Multiplicity="0..1" />
+    <End Role="SwipeInOutDetails" Type="Self.SwipeInOutDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeDetails">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="SwipeInOutDetails">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CybEmpSystemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetail" />
+    <EntitySet Name="SwipeInOutDetails" EntityType="Self.SwipeInOutDetail" />
+    <EntitySet Name="TotalHoursInfoes" EntityType="Self.TotalHoursInfo" />
+    <AssociationSet Name="FK__SwipeInOu__Emplo__286302EC" Association="Self.FK__SwipeInOu__Emplo__286302EC">
+      <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+      <End Role="SwipeInOutDetails" EntitySet="SwipeInOutDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
